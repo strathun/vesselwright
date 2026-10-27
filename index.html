@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Vesselwright</title>
+<meta name="description" content="Wire stones into a Vessel, discover how every combination composes, then test it in frozen-time combat.">
+<meta name="theme-color" content="#131923">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Vesselwright">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&family=Alegreya+Sans:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="css/game.css">
+<script src="version.js"></script>
+<script src="vendor/supabase.min.js" defer></script>
+<script type="module" src="js/main.js"></script>
+</head>
+<body>
+<div id="app">
+  <header class="top">
+    <div class="brand"><h1>Vesselwright</h1><span class="sub">Lattice-bench of the Undercroft</span></div>
+    <div class="purse"><button class="syncpill" id="syncpill" type="button" data-state="off">Local save</button><span class="ins" title="Insight is earned only by discovering new things">◇ <b id="insight">0</b> Insight</span><span title="Shards are taken from the Undercroft">▪ <b id="shards">0</b> Shards</span></div>
+  </header>
+  <nav class="tabs" role="tablist" id="tabs">
+    <button role="tab" data-tab="bench" aria-selected="true">Bench</button>
+    <button role="tab" data-tab="fuse" aria-selected="false">Fusion</button>
+    <button role="tab" data-tab="codex" aria-selected="false">Codex</button>
+    <button role="tab" data-tab="shop" aria-selected="false">Reliquary</button>
+    <button role="tab" data-tab="descend" aria-selected="false">Descend</button>
+    <button role="tab" data-tab="save" aria-selected="false">Save</button>
+  </nav>
+  <main>
+    <section id="tab-bench">
+      <div class="bench">
+        <div>
+          <div class="board-head"><h2>The Vessel's lattice</h2><span class="mono muted" id="filament"></span></div>
+          <div class="board" id="board"></div>
+          <p class="hint">Pick up a stone, then place it in a socket. Click the gaps between sockets to lay filament. A verb stone draws on every essence and modifier it can reach along filament, nearest first, and bare filament carries the current through empty sockets. Verbs that share a mesh can chain into one another.</p>
+        </div>
+        <aside class="readout" id="readout"></aside>
+      </div>
+      <div class="tray">
+        <div>
+          <div class="board-head"><h2>Satchel</h2><span class="label">Click to pick up · click here to unsocket</span></div>
+          <div class="satchel" id="satchel"></div>
+        </div>
+        <div class="detail" id="detail"></div>
+      </div>
+    </section>
+    <section id="tab-fuse" hidden></section>
+    <section id="tab-codex" hidden></section>
+    <section id="tab-shop" hidden></section>
+    <section id="tab-descend" hidden></section>
+    <section id="tab-save" hidden></section>
+  </main>
+</div>
+
+<section id="trial" hidden>
+  <div class="thud">
+    <div>
+      <div class="ehead"><h3>The Vessel</h3><span class="mono muted" id="hFury"></span></div>
+      <div class="gauge"><span class="label">Vigor</span><span class="g"><i id="gHp" style="background:var(--good)"></i></span><span class="v mono" id="vHp"></span></div>
+      <div class="gauge"><span class="label">Ward</span><span class="g"><i id="gSh" style="background:var(--ri)"></i></span><span class="v mono" id="vSh"></span></div>
+      <div class="gauge"><span class="label">Tempo</span><span class="g"><i id="gTe" style="background:var(--brass)"></i><span class="mark" id="mTe"></span></span><span class="v mono" id="vTe"></span></div>
+      <div class="gauge"><span class="label">Strain</span><span class="g"><i id="gSt" style="background:var(--blood)"></i></span><span class="v mono" id="vSt"></span></div>
+      <div class="chips" id="cYou"></div>
+    </div>
+    <div>
+      <div class="ehead"><h3 id="eName"></h3><span class="label" id="eFam"></span></div>
+      <div class="gauge"><span class="label">Vigor</span><span class="g"><i id="gEh" style="background:var(--blood)"></i></span><span class="v mono" id="vEh"></span></div>
+      <div class="gauge"><span class="label">Charge</span><span class="g"><i id="gEc" style="background:#e9a46a"></i></span><span class="v mono" id="vEc"></span></div>
+      <div class="tele" id="eTele"></div>
+      <div class="chips" id="cEn"></div>
+    </div>
+  </div>
+  <div class="arena-wrap"><canvas id="arena" aria-label="Arena"></canvas><div id="tOver" hidden></div></div>
+  <div class="tbot">
+    <div class="dock" id="dock"></div>
+    <div class="tctl">
+      <button class="btn" id="bFreeze">Freeze <kbd>F</kbd></button>
+      <button class="btn primary" id="bExec">Execute <kbd>E</kbd></button>
+      <span class="focusline" id="focusline"></span>
+      <button class="btn" id="bLeave">Withdraw</button>
+    </div>
+    <div class="tlog" id="tlog"></div>
+  </div>
+</section>
+<div id="toasts" aria-live="polite"></div>
+</body>
+</html>

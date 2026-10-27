@@ -1,0 +1,9 @@
+{
+  "name": "vesselwright",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "node tools/check.mjs",
+    "serve": "python3 -m http.server 8080"
+  }
+}
